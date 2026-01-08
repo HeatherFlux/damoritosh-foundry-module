@@ -1,0 +1,419 @@
+/**
+ * Damoritosh Hacking Viewer - Module Styles
+ */
+
+/* ==========================================
+   Viewer Application Window
+   ========================================== */
+
+.damoritosh-hacking-viewer-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-family: "Signika", sans-serif;
+}
+
+/* Config Panel (GM only) */
+.damoritosh-hacking-viewer-container .config-panel {
+  padding: 8px;
+  background: #252540;
+  border-bottom: 1px solid #3a3a5c;
+  flex-shrink: 0;
+}
+
+.damoritosh-hacking-viewer-container .url-input-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.damoritosh-hacking-viewer-container .url-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #3a3a5c;
+  border-radius: 4px;
+  background: #1a1a2e;
+  color: #e0e0e0;
+  font-size: 12px;
+}
+
+.damoritosh-hacking-viewer-container .url-input:focus {
+  outline: none;
+  border-color: #6c5ce7;
+  box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+}
+
+.damoritosh-hacking-viewer-container .url-input::placeholder {
+  color: #666;
+}
+
+.damoritosh-hacking-viewer-container .btn-load {
+  padding: 6px 12px;
+  background: #6c5ce7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.damoritosh-hacking-viewer-container .btn-load:hover {
+  background: #5b4cdb;
+}
+
+/* Button Row */
+.damoritosh-hacking-viewer-container .button-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.damoritosh-hacking-viewer-container .save-buttons,
+.damoritosh-hacking-viewer-container .share-buttons,
+.damoritosh-hacking-viewer-container .utility-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.damoritosh-hacking-viewer-container .btn-save,
+.damoritosh-hacking-viewer-container .btn-share,
+.damoritosh-hacking-viewer-container .btn-handout {
+  padding: 4px 8px;
+  font-size: 11px;
+  background: #3a3a5c;
+  color: #e0e0e0;
+  border: 1px solid #4a4a6c;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.damoritosh-hacking-viewer-container .btn-save:hover,
+.damoritosh-hacking-viewer-container .btn-share:hover,
+.damoritosh-hacking-viewer-container .btn-handout:hover {
+  background: #4a4a6c;
+  border-color: #5a5a7c;
+}
+
+.damoritosh-hacking-viewer-container .btn-util {
+  padding: 4px 8px;
+  font-size: 11px;
+  background: transparent;
+  color: #888;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.damoritosh-hacking-viewer-container .btn-util:hover {
+  color: #e0e0e0;
+  border-color: #4a4a6c;
+}
+
+.damoritosh-hacking-viewer-container .btn-clear:hover {
+  color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+/* URL Warning */
+.damoritosh-hacking-viewer-container .url-warning {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(231, 76, 60, 0.2);
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  border-radius: 4px;
+  color: #e74c3c;
+  font-size: 11px;
+}
+
+/* Iframe Container */
+.damoritosh-hacking-viewer-container .iframe-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0a0a1a;
+}
+
+.damoritosh-hacking-viewer-container .iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.damoritosh-hacking-viewer-container .iframe-container.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Empty State */
+.damoritosh-hacking-viewer-container .empty-state {
+  text-align: center;
+  color: #555;
+}
+
+.damoritosh-hacking-viewer-container .empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.damoritosh-hacking-viewer-container .empty-state p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Loading Overlay */
+.damoritosh-hacking-viewer-container .loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 26, 0.9);
+  color: #888;
+  gap: 12px;
+}
+
+.damoritosh-hacking-viewer-container .loading-overlay i {
+  font-size: 32px;
+}
+
+/* Error Overlay */
+.damoritosh-hacking-viewer-container .error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 26, 0.95);
+  color: #e74c3c;
+  text-align: center;
+  padding: 20px;
+}
+
+.damoritosh-hacking-viewer-container .error-overlay i {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.damoritosh-hacking-viewer-container .error-overlay p {
+  margin: 8px 0;
+}
+
+.damoritosh-hacking-viewer-container .fallback-hint a {
+  color: #6c5ce7;
+  text-decoration: none;
+}
+
+.damoritosh-hacking-viewer-container .fallback-hint a:hover {
+  text-decoration: underline;
+}
+
+/* Status Bar */
+.damoritosh-hacking-viewer-container .status-bar {
+  display: flex;
+  gap: 12px;
+  padding: 6px 10px;
+  background: #252540;
+  border-top: 1px solid #3a3a5c;
+  font-size: 11px;
+  color: #888;
+  flex-shrink: 0;
+}
+
+.damoritosh-hacking-viewer-container .status-bar span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.damoritosh-hacking-viewer-container .host-display {
+  color: #6c5ce7;
+}
+
+.damoritosh-hacking-viewer-container .session-display code {
+  background: #1a1a2e;
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-family: monospace;
+}
+
+.damoritosh-hacking-viewer-container .status-indicator.connected {
+  color: #2ecc71;
+}
+
+.damoritosh-hacking-viewer-container .status-indicator.loading {
+  color: #f39c12;
+}
+
+.damoritosh-hacking-viewer-container .bridge-status.connected {
+  color: #3498db;
+}
+
+.damoritosh-hacking-viewer-container .status-empty {
+  color: #555;
+  font-style: italic;
+}
+
+/* Diagnostics Panel */
+.damoritosh-hacking-viewer-container .diagnostics-panel {
+  padding: 8px;
+  background: #1a1a2e;
+  border-top: 1px solid #3a3a5c;
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.damoritosh-hacking-viewer-container .diagnostics-panel h4 {
+  margin: 0 0 8px 0;
+  font-size: 11px;
+  color: #888;
+}
+
+.damoritosh-hacking-viewer-container .diagnostics-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.damoritosh-hacking-viewer-container .diagnostics-panel td {
+  padding: 2px 4px;
+  border-bottom: 1px solid #252540;
+}
+
+.damoritosh-hacking-viewer-container .diagnostics-panel td:first-child {
+  color: #888;
+  width: 120px;
+}
+
+.damoritosh-hacking-viewer-container .diagnostics-panel .url-cell {
+  word-break: break-all;
+  font-family: monospace;
+  font-size: 9px;
+}
+
+.damoritosh-hacking-viewer-container .diagnostics-panel .error-cell {
+  color: #e74c3c;
+}
+
+/* ==========================================
+   Chat Message Styles
+   ========================================== */
+
+.damoritosh-hacking-viewer-chat-message {
+  padding: 8px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%);
+  border-radius: 6px;
+  border: 1px solid #3a3a5c;
+}
+
+.damoritosh-hacking-viewer-chat-message h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #6c5ce7;
+}
+
+.damoritosh-hacking-viewer-chat-message .host-info,
+.damoritosh-hacking-viewer-chat-message .session-info {
+  margin: 4px 0;
+  font-size: 12px;
+  color: #bbb;
+}
+
+.damoritosh-hacking-viewer-chat-message code {
+  background: #1a1a2e;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.damoritosh-hacking-viewer-chat-message .button-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.damoritosh-hacking-viewer-chat-message button,
+.damoritosh-hacking-viewer-chat-message .external-link {
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.damoritosh-hacking-viewer-chat-message button {
+  background: #6c5ce7;
+  color: white;
+  border: none;
+}
+
+.damoritosh-hacking-viewer-chat-message button:hover {
+  background: #5b4cdb;
+}
+
+.damoritosh-hacking-viewer-chat-message .external-link {
+  background: transparent;
+  color: #888;
+  border: 1px solid #3a3a5c;
+}
+
+.damoritosh-hacking-viewer-chat-message .external-link:hover {
+  color: #e0e0e0;
+  border-color: #5a5a7c;
+}
+
+/* ==========================================
+   Journal Handout Styles (embedded in content)
+   ========================================== */
+
+.damoritosh-hacking-viewer-journal-content {
+  padding: 10px;
+}
+
+.damoritosh-hacking-viewer-journal-content h2 {
+  border-bottom: 2px solid #6c5ce7;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  color: #6c5ce7;
+}
+
+.damoritosh-hacking-viewer-journal-content .info-section {
+  background: rgba(108, 92, 231, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(108, 92, 231, 0.2);
+}
+
+.damoritosh-hacking-viewer-journal-content .button {
+  display: inline-block;
+  background: #6c5ce7;
+  color: white !important;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.damoritosh-hacking-viewer-journal-content .button:hover {
+  background: #5b4cdb;
+}

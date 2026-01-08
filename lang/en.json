@@ -1,0 +1,102 @@
+{
+  "damoritosh-hacking-viewer": {
+    "title": "Hacking Viewer",
+
+    "settings": {
+      "hostAllowlist": {
+        "name": "Allowed Hosts",
+        "hint": "Comma-separated list of allowed hosts for embedding (e.g., starfinderencounters.com)"
+      },
+      "allowAnyHost": {
+        "name": "Allow Any Host (Unsafe)",
+        "hint": "Allow embedding URLs from any host. Warning: This may pose security risks."
+      },
+      "defaultUrl": {
+        "name": "Default URL",
+        "hint": "Default player view URL to use when no scene-specific URL is set"
+      },
+      "storageScope": {
+        "name": "URL Storage Scope",
+        "hint": "Where to look for saved URLs first",
+        "world": "World Default",
+        "scene": "Scene-Specific"
+      },
+      "playersCanOpen": {
+        "name": "Players Can Open Viewer",
+        "hint": "Allow players to open the hacking viewer window"
+      },
+      "diagnosticsMode": {
+        "name": "Show Diagnostics",
+        "hint": "Display diagnostics panel in the viewer for troubleshooting"
+      },
+      "journalHandoutName": {
+        "name": "Journal Handout Name",
+        "hint": "Name of the journal entry created for player handouts"
+      },
+      "enableBridge": {
+        "name": "Enable Bridge",
+        "hint": "Enable postMessage bridge for communication with the embedded app"
+      },
+      "autoPostOnShare": {
+        "name": "Auto-Post on Share",
+        "hint": "Automatically post to chat when the URL is updated"
+      }
+    },
+
+    "controls": {
+      "title": "Hacking Viewer",
+      "openViewer": "Open Hacking Viewer"
+    },
+
+    "viewer": {
+      "title": "Hacking Viewer",
+      "urlPlaceholder": "Paste player view URL...",
+      "load": "Load",
+      "saveToScene": "Save to Scene",
+      "saveToWorld": "Save to World",
+      "share": "Share",
+      "createHandout": "Create Journal",
+      "reload": "Reload",
+      "copy": "Copy Link",
+      "external": "Open in Browser",
+      "clear": "Clear",
+      "loading": "Loading...",
+      "loaded": "Loaded",
+      "noUrl": "No URL loaded",
+      "waitingForGM": "Waiting for GM to share a hacking view..."
+    },
+
+    "notifications": {
+      "shared": "Hacking view shared to chat",
+      "copied": "URL copied to clipboard",
+      "copyFailed": "Failed to copy URL",
+      "savedToScene": "URL saved to current scene",
+      "savedToWorld": "URL saved as world default",
+      "noUrl": "No URL to share",
+      "noScene": "No active scene",
+      "gmOnly": "Only the GM can perform this action",
+      "journalCreated": "Journal handout created",
+      "journalUpdated": "Journal handout updated",
+      "journalDeleted": "Journal handout deleted",
+      "noHandout": "No handout exists",
+      "invalidUrl": "Invalid URL",
+      "hostNotAllowed": "Host not in allowlist"
+    },
+
+    "chat": {
+      "sharedTitle": "Hacking Network Shared",
+      "openViewer": "Open Viewer",
+      "openInBrowser": "Open in Browser"
+    },
+
+    "diagnostics": {
+      "title": "Diagnostics",
+      "foundryVersion": "Foundry Version",
+      "moduleVersion": "Module Version",
+      "currentUrl": "Current URL",
+      "iframeLoaded": "Iframe Loaded",
+      "bridgeConnected": "Bridge Connected",
+      "lastError": "Last Error"
+    }
+  }
+}

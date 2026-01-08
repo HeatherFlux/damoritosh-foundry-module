@@ -1,0 +1,137 @@
+<div class="damoritosh-hacking-viewer-container">
+  {{#if isGM}}
+  <div class="config-panel">
+    <div class="url-input-row">
+      <input type="text"
+             name="url"
+             value="{{currentUrl}}"
+             placeholder="Paste player view URL (e.g., starfinderencounters.com/#/hacking/view?...)"
+             class="url-input">
+      <button type="button" data-action="load" class="btn-load" title="Load URL">
+        <i class="fas fa-play"></i>
+      </button>
+    </div>
+
+    <div class="button-row">
+      <div class="save-buttons">
+        <button type="button" data-action="saveScene" class="btn-save" title="Save URL to current scene">
+          <i class="fas fa-map"></i> Save to Scene
+        </button>
+        <button type="button" data-action="saveWorld" class="btn-save" title="Save as world default">
+          <i class="fas fa-globe"></i> Save to World
+        </button>
+      </div>
+
+      <div class="share-buttons">
+        <button type="button" data-action="share" class="btn-share" title="Share to chat">
+          <i class="fas fa-share"></i> Share
+        </button>
+        <button type="button" data-action="createHandout" class="btn-handout" title="Create/Update journal handout">
+          <i class="fas fa-book"></i> Journal
+        </button>
+      </div>
+
+      <div class="utility-buttons">
+        <button type="button" data-action="reload" class="btn-util" title="Reload iframe">
+          <i class="fas fa-rotate"></i>
+        </button>
+        <button type="button" data-action="copy" class="btn-util" title="Copy URL">
+          <i class="fas fa-copy"></i>
+        </button>
+        <button type="button" data-action="external" class="btn-util" title="Open in browser">
+          <i class="fas fa-external-link-alt"></i>
+        </button>
+        <button type="button" data-action="clear" class="btn-util btn-clear" title="Clear URL">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    {{#if urlError}}
+    <div class="url-warning">
+      <i class="fas fa-exclamation-triangle"></i> {{urlError}}
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  <div class="iframe-container {{#unless hasUrl}}empty{{/unless}}">
+    {{#if hasUrl}}
+    <iframe src="{{iframeSrc}}"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+            allow="clipboard-write"
+            loading="lazy"></iframe>
+
+    {{#unless iframeLoaded}}
+    <div class="loading-overlay">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span>Loading...</span>
+    </div>
+    {{/unless}}
+
+    {{#if lastError}}
+    <div class="error-overlay">
+      <i class="fas fa-exclamation-circle"></i>
+      <p>{{lastError}}</p>
+      <p class="fallback-hint">
+        <a href="{{iframeSrc}}" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Open in Browser
+        </a>
+      </p>
+    </div>
+    {{/if}}
+    {{else}}
+    <div class="empty-state">
+      <i class="fas fa-network-wired"></i>
+      {{#if isGM}}
+      <p>Paste a player view URL above to get started</p>
+      {{else}}
+      <p>Waiting for GM to share a hacking view...</p>
+      {{/if}}
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="status-bar">
+    {{#if hasUrl}}
+    <span class="host-display">
+      <i class="fas fa-server"></i> {{hostDisplay}}
+    </span>
+    {{#if sessionDisplay}}
+    <span class="session-display">
+      <i class="fas fa-key"></i> {{sessionDisplay}}
+    </span>
+    {{/if}}
+    <span class="status-indicator {{#if iframeLoaded}}connected{{else}}loading{{/if}}">
+      {{#if iframeLoaded}}
+      <i class="fas fa-check-circle"></i> Loaded
+      {{else}}
+      <i class="fas fa-circle-notch fa-spin"></i> Loading
+      {{/if}}
+    </span>
+    {{#if bridgeConnected}}
+    <span class="bridge-status connected">
+      <i class="fas fa-link"></i> Bridge
+    </span>
+    {{/if}}
+    {{else}}
+    <span class="status-empty">No URL loaded</span>
+    {{/if}}
+  </div>
+
+  {{#if showDiagnostics}}
+  <div class="diagnostics-panel">
+    <h4><i class="fas fa-stethoscope"></i> Diagnostics</h4>
+    <table>
+      <tr><td>Foundry Version:</td><td>{{diagnostics.foundryVersion}}</td></tr>
+      <tr><td>Module Version:</td><td>{{diagnostics.moduleVersion}}</td></tr>
+      <tr><td>Current URL:</td><td class="url-cell">{{diagnostics.currentUrl}}</td></tr>
+      <tr><td>Iframe Loaded:</td><td>{{#if diagnostics.iframeLoaded}}Yes{{else}}No{{/if}}</td></tr>
+      <tr><td>Bridge Connected:</td><td>{{#if diagnostics.bridgeConnected}}Yes{{else}}No{{/if}}</td></tr>
+      {{#if diagnostics.lastError}}
+      <tr><td>Last Error:</td><td class="error-cell">{{diagnostics.lastError}}</td></tr>
+      {{/if}}
+    </table>
+  </div>
+  {{/if}}
+</div>
