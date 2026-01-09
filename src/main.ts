@@ -170,6 +170,9 @@ Hooks.once('init', () => {
     ViewerAppClass = createViewerAppV1Class();
   }
 
+  // Register scene controls hook EARLY - before controls are rendered
+  registerSceneControls();
+
   log('Initialization complete');
 });
 
@@ -184,8 +187,7 @@ Hooks.once('ready', () => {
   initBridge();
   setupDefaultHandlers();
 
-  // Register UI hooks
-  registerSceneControls();
+  // Register UI hooks (scene controls already registered in init)
   registerChatHooks();
   registerViewerHooks();
   registerSheetHooks();

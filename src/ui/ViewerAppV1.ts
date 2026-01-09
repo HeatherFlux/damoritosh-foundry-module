@@ -76,14 +76,27 @@ export function createViewerAppV1Class() {
 
       setViewerIframe(iframe);
 
+      const loadingOverlay = html.find('.loading-overlay')[0] as HTMLElement;
+      const statusIndicator = html.find('.status-indicator')[0] as HTMLElement;
+
       iframe.addEventListener('load', () => {
         handleIframeLoad();
-        this.render(false);
+        // Directly update DOM instead of re-rendering
+        if (loadingOverlay) {
+          loadingOverlay.style.display = 'none';
+        }
+        if (statusIndicator) {
+          statusIndicator.classList.remove('loading');
+          statusIndicator.classList.add('connected');
+          statusIndicator.innerHTML = '<i class="fas fa-check-circle"></i> Loaded';
+        }
       });
 
       iframe.addEventListener('error', () => {
         handleIframeError('Failed to load iframe');
-        this.render(false);
+        if (loadingOverlay) {
+          loadingOverlay.style.display = 'flex';
+        }
       });
     }
 

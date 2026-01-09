@@ -792,17 +792,30 @@ function createViewerAppV2Class() {
     }
     /** Attach iframe event listeners */
     _attachIframeListeners() {
-      var _a2;
+      var _a2, _b, _c;
       const iframe = (_a2 = this.element) == null ? void 0 : _a2.querySelector("iframe");
       if (!iframe) return;
       if (iframe._listenersAttached) return;
       iframe._listenersAttached = true;
       setViewerIframe(iframe);
+      const loadingOverlay = (_b = this.element) == null ? void 0 : _b.querySelector(".loading-overlay");
+      const statusIndicator = (_c = this.element) == null ? void 0 : _c.querySelector(".status-indicator");
       iframe.addEventListener("load", () => {
         handleIframeLoad();
+        if (loadingOverlay) {
+          loadingOverlay.style.display = "none";
+        }
+        if (statusIndicator) {
+          statusIndicator.classList.remove("loading");
+          statusIndicator.classList.add("connected");
+          statusIndicator.innerHTML = '<i class="fas fa-check-circle"></i> Loaded';
+        }
       });
       iframe.addEventListener("error", () => {
         handleIframeError("Failed to load iframe");
+        if (loadingOverlay) {
+          loadingOverlay.style.display = "flex";
+        }
       });
     }
     /** Attach form input listeners */
@@ -953,13 +966,24 @@ function createViewerAppV1Class() {
       const iframe = html.find("iframe")[0];
       if (!iframe) return;
       setViewerIframe(iframe);
+      const loadingOverlay = html.find(".loading-overlay")[0];
+      const statusIndicator = html.find(".status-indicator")[0];
       iframe.addEventListener("load", () => {
         handleIframeLoad();
-        this.render(false);
+        if (loadingOverlay) {
+          loadingOverlay.style.display = "none";
+        }
+        if (statusIndicator) {
+          statusIndicator.classList.remove("loading");
+          statusIndicator.classList.add("connected");
+          statusIndicator.innerHTML = '<i class="fas fa-check-circle"></i> Loaded';
+        }
       });
       iframe.addEventListener("error", () => {
         handleIframeError("Failed to load iframe");
-        this.render(false);
+        if (loadingOverlay) {
+          loadingOverlay.style.display = "flex";
+        }
       });
     }
     /** Attach form input listeners */
@@ -1142,13 +1166,13 @@ Hooks.once("init", () => {
     log("Using Application (V11)");
     ViewerAppClass = createViewerAppV1Class();
   }
+  registerSceneControls();
   log("Initialization complete");
 });
 Hooks.once("ready", () => {
   log("Ready");
   initBridge();
   setupDefaultHandlers();
-  registerSceneControls();
   registerChatHooks();
   registerViewerHooks();
   registerSheetHooks();

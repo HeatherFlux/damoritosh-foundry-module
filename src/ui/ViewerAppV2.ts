@@ -123,13 +123,27 @@ export function createViewerAppV2Class() {
 
       setViewerIframe(iframe);
 
+      const loadingOverlay = this.element?.querySelector('.loading-overlay') as HTMLElement;
+      const statusIndicator = this.element?.querySelector('.status-indicator') as HTMLElement;
+
       iframe.addEventListener('load', () => {
         handleIframeLoad();
-        // Don't re-render - causes infinite loop
+        // Directly update DOM instead of re-rendering
+        if (loadingOverlay) {
+          loadingOverlay.style.display = 'none';
+        }
+        if (statusIndicator) {
+          statusIndicator.classList.remove('loading');
+          statusIndicator.classList.add('connected');
+          statusIndicator.innerHTML = '<i class="fas fa-check-circle"></i> Loaded';
+        }
       });
 
       iframe.addEventListener('error', () => {
         handleIframeError('Failed to load iframe');
+        if (loadingOverlay) {
+          loadingOverlay.style.display = 'flex';
+        }
       });
     }
 
