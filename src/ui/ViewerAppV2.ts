@@ -117,16 +117,19 @@ export function createViewerAppV2Class() {
       const iframe = this.element?.querySelector('iframe') as HTMLIFrameElement;
       if (!iframe) return;
 
+      // Prevent re-attaching listeners
+      if ((iframe as any)._listenersAttached) return;
+      (iframe as any)._listenersAttached = true;
+
       setViewerIframe(iframe);
 
       iframe.addEventListener('load', () => {
         handleIframeLoad();
-        this.render(false);
+        // Don't re-render - causes infinite loop
       });
 
       iframe.addEventListener('error', () => {
         handleIframeError('Failed to load iframe');
-        this.render(false);
       });
     }
 

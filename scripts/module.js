@@ -5,6 +5,9 @@ const MODULE_ID = "damoritosh-hacking-viewer";
 function isV12() {
   return foundry.utils.isNewerVersion(game.version, "11.999");
 }
+function isV13() {
+  return foundry.utils.isNewerVersion(game.version, "12.999");
+}
 function getModuleVersion() {
   const module = game.modules.get(MODULE_ID);
   return (module == null ? void 0 : module.version) ?? "0.0.0";
@@ -792,14 +795,14 @@ function createViewerAppV2Class() {
       var _a2;
       const iframe = (_a2 = this.element) == null ? void 0 : _a2.querySelector("iframe");
       if (!iframe) return;
+      if (iframe._listenersAttached) return;
+      iframe._listenersAttached = true;
       setViewerIframe(iframe);
       iframe.addEventListener("load", () => {
         handleIframeLoad();
-        this.render(false);
       });
       iframe.addEventListener("error", () => {
         handleIframeError("Failed to load iframe");
-        this.render(false);
       });
     }
     /** Attach form input listeners */
@@ -1061,25 +1064,46 @@ function openViewer(url) {
 }
 function registerSceneControls() {
   Hooks.on("getSceneControlButtons", (controls) => {
+    var _a;
     const canAccess = isGM() || canPlayersOpen();
     if (!canAccess) return;
-    controls.push({
-      name: "hacking-viewer",
-      title: `${MODULE_ID}.controls.title`,
-      icon: "fas fa-network-wired",
-      layer: "controls",
-      visible: canAccess,
-      tools: [
-        {
-          name: "open-viewer",
+    if (isV13()) {
+      const controlsObj = controls;
+      if ((_a = controlsObj.tokens) == null ? void 0 : _a.tools) {
+        controlsObj.tokens.tools.hackingViewer = {
+          name: "hackingViewer",
           title: `${MODULE_ID}.controls.openViewer`,
-          icon: "fas fa-display",
-          onClick: () => openViewer(),
-          button: true
-        }
-      ],
-      activeTool: "open-viewer"
-    });
+          icon: "fa-solid fa-network-wired",
+          order: Object.keys(controlsObj.tokens.tools).length,
+          button: true,
+          visible: canAccess,
+          onChange: () => {
+            openViewer();
+          }
+        };
+        log("Added hacking viewer tool to tokens control (V13)");
+      }
+    } else {
+      const controlsArray = controls;
+      controlsArray.push({
+        name: "hacking-viewer",
+        title: `${MODULE_ID}.controls.title`,
+        icon: "fas fa-network-wired",
+        layer: "controls",
+        visible: canAccess,
+        tools: [
+          {
+            name: "open-viewer",
+            title: `${MODULE_ID}.controls.openViewer`,
+            icon: "fas fa-display",
+            onClick: () => openViewer(),
+            button: true
+          }
+        ],
+        activeTool: "open-viewer"
+      });
+      log("Added hacking viewer control group (V11/V12)");
+    }
   });
 }
 function registerChatHooks() {

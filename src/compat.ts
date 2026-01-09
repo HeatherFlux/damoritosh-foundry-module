@@ -10,6 +10,12 @@ export function isV12(): boolean {
   return foundry.utils.isNewerVersion(game.version, '11.999');
 }
 
+/** Check if running Foundry V13 or newer */
+export function isV13(): boolean {
+  // @ts-expect-error - Foundry global
+  return foundry.utils.isNewerVersion(game.version, '12.999');
+}
+
 /** Get the module version from manifest */
 export function getModuleVersion(): string {
   // @ts-expect-error - Foundry global

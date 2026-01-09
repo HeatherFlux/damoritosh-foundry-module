@@ -6,7 +6,7 @@
  */
 
 import { MODULE_ID, type ViewerAppOptions } from './types';
-import { isV12, log, isGM } from './compat';
+import { isV12, isV13, log, isGM } from './compat';
 import { registerSettings, canPlayersOpen, getCurrentUrl, getSharedUrl } from './services/storage';
 import { initBridge, setupDefaultHandlers, destroyBridge } from './services/bridge';
 import { onRenderChatMessage } from './services/share';
@@ -48,32 +48,60 @@ function openViewer(url?: string): void {
 
 /**
  * Register scene control buttons
+ * V11/V12: controls is an array - push a new control group
+ * V13: controls is an object keyed by control name - add tool to existing control
  */
 function registerSceneControls(): void {
   // @ts-expect-error - Foundry global
-  Hooks.on('getSceneControlButtons', (controls: Array<Record<string, unknown>>) => {
+  Hooks.on('getSceneControlButtons', (controls: unknown) => {
     // Only show if user can access
     const canAccess = isGM() || canPlayersOpen();
     if (!canAccess) return;
 
-    // Find the token controls group or create our own
-    controls.push({
-      name: 'hacking-viewer',
-      title: `${MODULE_ID}.controls.title`,
-      icon: 'fas fa-network-wired',
-      layer: 'controls',
-      visible: canAccess,
-      tools: [
-        {
-          name: 'open-viewer',
+    if (isV13()) {
+      // V13: controls is an object like { tokens: {...}, notes: {...}, ... }
+      // Each control has a 'tools' object where we add our tool
+      const controlsObj = controls as Record<string, {
+        tools: Record<string, unknown>;
+      }>;
+
+      // Add to the 'tokens' control (always present)
+      if (controlsObj.tokens?.tools) {
+        controlsObj.tokens.tools.hackingViewer = {
+          name: 'hackingViewer',
           title: `${MODULE_ID}.controls.openViewer`,
-          icon: 'fas fa-display',
-          onClick: () => openViewer(),
-          button: true
-        }
-      ],
-      activeTool: 'open-viewer'
-    });
+          icon: 'fa-solid fa-network-wired',
+          order: Object.keys(controlsObj.tokens.tools).length,
+          button: true,
+          visible: canAccess,
+          onChange: () => {
+            openViewer();
+          }
+        };
+        log('Added hacking viewer tool to tokens control (V13)');
+      }
+    } else {
+      // V11/V12: controls is an array - push a new control group
+      const controlsArray = controls as Array<unknown>;
+      controlsArray.push({
+        name: 'hacking-viewer',
+        title: `${MODULE_ID}.controls.title`,
+        icon: 'fas fa-network-wired',
+        layer: 'controls',
+        visible: canAccess,
+        tools: [
+          {
+            name: 'open-viewer',
+            title: `${MODULE_ID}.controls.openViewer`,
+            icon: 'fas fa-display',
+            onClick: () => openViewer(),
+            button: true
+          }
+        ],
+        activeTool: 'open-viewer'
+      });
+      log('Added hacking viewer control group (V11/V12)');
+    }
   });
 }
 
